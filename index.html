@@ -1,2367 +1,293 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Makara Deluxe | Luxury Charter Experience</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <style>
-    :root {
-      --primary-navy: #0a1628;
-      --secondary-navy: #1e3a5f;
-      --gold: #c9a961;
-      --gold-light: #e5d5a5;
-      --champagne: #f7f5f0;
-      --white: #ffffff;
-      --text-dark: #1a1a1a;
-      --text-gray: #666666;
-      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      color: var(--text-dark);
-      line-height: 1.6;
-      overflow-x: hidden;
-      background: var(--white);
-    }
-
-    body.lightbox-open { overflow: hidden; }
-
-    h1, h2, h3, h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-    }
-
-    img { max-width: 100%; display: block; }
-
-    /* NAVBAR */
-    .navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 1rem 0;
-      background: var(--primary-navy);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
-    }
-
-    .nav-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-    }
-
-    .logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      letter-spacing: 1.5px;
-      z-index: 1002;
-      cursor: default;
-    }
-
-    .logo span { color: var(--gold); }
-
-    .nav-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      transition: var(--transition);
-    }
-
-    .nav-links a:hover { color: var(--gold); }
-
-    .nav-cta {
-      background: var(--gold);
-      color: var(--primary-navy) !important;
-      padding: 0.7rem 1.5rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-    }
-
-    .nav-cta:hover {
-      background: var(--gold-light);
-      transform: translateY(-2px);
-    }
-
-    .language-switcher {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .language-current {
-      color: var(--white);
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 0.9rem;
-      border: 1px solid rgba(255,255,255,0.3);
-      transition: var(--transition);
-    }
-
-    .language-current:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-    }
-
-    .language-dropdown {
-      position: absolute;
-      top: calc(100% + 10px);
-      right: 0;
-      background: var(--primary-navy);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 4px;
-      overflow: hidden;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: var(--transition);
-      min-width: 200px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      z-index: 1001;
-    }
-
-    .language-dropdown.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .language-option {
-      padding: 0.9rem 1.2rem;
-      color: var(--white);
-      cursor: pointer;
-      transition: var(--transition);
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .language-option:hover,
-    .language-option.active {
-      background: var(--gold);
-      color: var(--primary-navy);
-    }
-
-    .mobile-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 8px;
-      background: transparent;
-      border: none;
-      z-index: 1003;
-      order: 3;
-    }
-
-    .mobile-toggle span {
-      width: 25px;
-      height: 2px;
-      background: var(--white);
-      transition: var(--transition);
-      border-radius: 2px;
-    }
-
-    .mobile-toggle.active span:nth-child(1) { 
-      transform: rotate(45deg) translate(5px, 5px); 
-    }
-    .mobile-toggle.active span:nth-child(2) { opacity: 0; }
-    .mobile-toggle.active span:nth-child(3) { 
-      transform: rotate(-45deg) translate(5px, -5px); 
-    }
-
-    .mobile-menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 999;
-      opacity: 0;
-      visibility: hidden;
-      transition: var(--transition);
-    }
-
-    .mobile-menu-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 85%;
-      max-width: 380px;
-      height: 100vh;
-      background: var(--primary-navy);
-      z-index: 1000;
-      transition: var(--transition);
-      overflow-y: auto;
-      box-shadow: -10px 0 30px rgba(0,0,0,0.3);
-    }
-
-    .mobile-menu.active { right: 0; }
-
-    .mobile-menu-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 1.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .mobile-menu-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      color: var(--white);
-      font-weight: 600;
-    }
-
-    .mobile-close-btn {
-      width: 40px;
-      height: 40px;
-      background: rgba(255,255,255,0.1);
-      border: none;
-      border-radius: 50%;
-      color: var(--white);
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-      flex-shrink: 0;
-    }
-
-    .mobile-close-btn:hover {
-      background: var(--gold);
-      color: var(--primary-navy);
-      transform: rotate(90deg);
-    }
-
-    .mobile-menu-content { padding: 1.5rem; }
-
-    .mobile-nav-links {
-      list-style: none;
-      margin-bottom: 2rem;
-    }
-
-    .mobile-nav-links li { margin-bottom: 0.5rem; }
-
-    .mobile-nav-links a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      display: block;
-      padding: 0.9rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      transition: var(--transition);
-    }
-
-    .mobile-nav-links a:hover {
-      color: var(--gold);
-      padding-left: 10px;
-    }
-
-    .mobile-cta {
-      background: var(--gold);
-      color: var(--primary-navy) !important;
-      padding: 0.9rem 1.5rem !important;
-      text-align: center;
-      border-radius: 4px;
-      font-weight: 600;
-      margin-top: 1rem;
-      border: none !important;
-    }
-
-    .mobile-cta:hover {
-      background: var(--gold-light);
-      padding-left: 1.5rem !important;
-    }
-
-    .mobile-language {
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .mobile-language-title {
-      color: var(--gold);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .mobile-language-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .mobile-lang-option {
-      color: var(--white);
-      padding: 0.8rem 1rem;
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      border-radius: 4px;
-      font-size: 0.95rem;
-    }
-
-    .mobile-lang-option .lang-flag {
-      font-size: 1.2rem;
-      margin-right: 0.5rem;
-    }
-
-    .mobile-lang-option:hover,
-    .mobile-lang-option.active {
-      background: rgba(201, 169, 97, 0.2);
-      color: var(--gold);
-    }
-
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      padding: 140px 20px 80px;
-      background: var(--primary-navy);
-    }
-
-    .hero-video-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .hero-video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      transform: translate(-50%, -50%);
-      object-fit: cover;
-      z-index: 0;
-    }
-
-    .hero-video-fallback {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(10,22,40,0.9), rgba(30,58,95,0.7)),
-                  url('https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover;
-      z-index: 0;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        135deg, 
-        rgba(10, 22, 40, 0.85) 0%, 
-        rgba(30, 58, 95, 0.65) 50%,
-        rgba(10, 22, 40, 0.8) 100%
-      );
-      z-index: 1;
-    }
-
-    .hero-video-badge {
-      position: absolute;
-      bottom: 2rem;
-      right: 2rem;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .hero-video-badge i {
-      color: var(--gold);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    .hero-content {
-      text-align: center;
-      color: var(--white);
-      max-width: 900px;
-      padding: 0 1.5rem;
-      animation: fadeInUp 1.2s ease-out;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-subtitle {
-      font-size: 0.8rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.2rem;
-      display: block;
-      font-weight: 500;
-    }
-
-    .hero-title {
-      font-size: clamp(1.8rem, 4vw, 3.5rem);
-      line-height: 1.15;
-      margin-bottom: 1.2rem;
-      font-weight: 300;
-    }
-
-    .hero-title em {
-      font-style: italic;
-      color: var(--gold);
-      font-weight: 400;
-    }
-
-    .hero-text {
-      font-size: clamp(0.95rem, 1.3vw, 1.1rem);
-      font-weight: 300;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-      line-height: 1.6;
-    }
-
-    .hero-cta {
-      display: inline-flex;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .btn-premium {
-      padding: 0.9rem 2rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: var(--transition);
-      cursor: pointer;
-      border: 2px solid var(--gold);
-      display: inline-block;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .btn-gold {
-      background: var(--gold);
-      color: var(--primary-navy);
-    }
-
-    .btn-gold:hover {
-      background: var(--gold-light);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(201, 169, 97, 0.3);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--white);
-      border-color: var(--white);
-    }
-
-    .btn-outline:hover {
-      background: var(--white);
-      color: var(--primary-navy);
-      transform: translateY(-3px);
-    }
-
-    /* SECTIONS */
-    .section { padding: 5rem 0; position: relative; }
-
-    .section-header {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 3rem;
-      padding: 0 1.5rem;
-    }
-
-    .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.8rem;
-      display: block;
-      font-weight: 600;
-    }
-
-    .section-title {
-      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
-      color: var(--primary-navy);
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    .section-subtitle {
-      font-size: 0.95rem;
-      color: var(--text-gray);
-      font-weight: 300;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    /* LOCATIONS SLIDER */
-    .locations-section {
-      background: var(--champagne);
-      padding: 4rem 0;
-    }
-
-    .locations-title {
-      text-align: center;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--primary-navy);
-      margin-bottom: 3rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-    }
-
-    .locations-slider {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    }
-
-    .locations-slides {
-      display: flex;
-      transition: transform 0.5s ease;
-    }
-
-    .location-slide {
-      min-width: 100%;
-      position: relative;
-      height: 600px;
-    }
-
-    .location-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .location-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(10,22,40,0.95), rgba(10,22,40,0.4));
-      padding: 3rem 2.5rem;
-      color: var(--white);
-    }
-
-    .location-slide h3 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .location-slide p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-      line-height: 1.6;
-    }
-
-    .location-btn {
-      display: inline-block;
-      padding: 1rem 2.5rem;
-      background: #1a73e8;
-      color: var(--white);
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: var(--transition);
-      border: 2px solid transparent;
-    }
-
-    .location-btn:hover {
-      background: transparent;
-      border-color: var(--white);
-      transform: translateY(-2px);
-    }
-
-    .slider-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 50px;
-      height: 50px;
-      background: rgba(255,255,255,0.2);
-      border: none;
-      border-radius: 50%;
-      color: var(--white);
-      font-size: 1.5rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-      backdrop-filter: blur(10px);
-    }
-
-    .slider-nav:hover {
-      background: rgba(255,255,255,0.4);
-    }
-
-    .slider-prev { left: 20px; }
-    .slider-next { right: 20px; }
-
-    .slider-dots {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-    }
-
-    .slider-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.5);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .slider-dot.active {
-      background: var(--gold);
-      width: 30px;
-      border-radius: 6px;
-    }
-
-    /* YACHTS GRID */
-    .yachts-section { background: var(--champagne); }
-
-    .yachts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-
-    .yacht-card {
-      background: var(--white);
-      overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-      transition: var(--transition);
-      cursor: pointer;
-    }
-
-    .yacht-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-    }
-
-    .yacht-image-wrapper {
-      position: relative;
-      overflow: hidden;
-      height: 280px;
-      background: linear-gradient(135deg, #0a1628 0%, #1e3a5f 100%);
-    }
-
-    .yacht-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.8s ease;
-    }
-
-    .yacht-card:hover .yacht-image { transform: scale(1.1); }
-
-    .yacht-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: var(--gold);
-      color: var(--primary-navy);
-      padding: 0.4rem 0.9rem;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      z-index: 2;
-    }
-
-    .yacht-view-gallery {
-      position: absolute;
-      bottom: 1rem;
-      right: 1rem;
-      background: rgba(201, 169, 97, 0.9);
-      color: var(--primary-navy);
-      padding: 0.5rem 1rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      border-radius: 4px;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: var(--transition);
-      z-index: 2;
-    }
-
-    .yacht-card:hover .yacht-view-gallery {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .yacht-content { padding: 1.5rem; }
-
-    .yacht-category {
-      font-size: 0.7rem;
-      color: var(--gold);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-      font-weight: 600;
-    }
-
-    .yacht-name {
-      font-size: 1.5rem;
-      color: var(--primary-navy);
-      margin-bottom: 0.6rem;
-      font-weight: 400;
-    }
-
-    .yacht-specs {
-      display: flex;
-      gap: 1.2rem;
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #eee;
-      flex-wrap: wrap;
-    }
-
-    .spec {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8rem;
-      color: var(--text-gray);
-    }
-
-    .spec i {
-      color: var(--gold);
-      font-size: 0.95rem;
-    }
-
-    .yacht-description {
-      color: var(--text-gray);
-      line-height: 1.6;
-      margin-bottom: 1.2rem;
-      font-weight: 300;
-      font-size: 0.9rem;
-    }
-
-    .yacht-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .yacht-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      color: var(--primary-navy);
-      font-weight: 600;
-    }
-
-    .yacht-price span {
-      font-size: 0.8rem;
-      color: var(--text-gray);
-      font-weight: 400;
-      display: block;
-      letter-spacing: 1px;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .btn-yacht {
-      background: var(--primary-navy);
-      color: var(--white);
-      padding: 0.8rem 1.5rem;
-      text-decoration: none;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: var(--transition);
-      border: 2px solid var(--primary-navy);
-      cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .btn-yacht:hover {
-      background: transparent;
-      color: var(--primary-navy);
-    }
-
-    /* LIGHTBOX */
-    .lightbox {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.95);
-      z-index: 10000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .lightbox.active {
-      display: flex;
-    }
-
-    .lightbox-content {
-      position: relative;
-      max-width: 90%;
-      max-height: 90%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .lightbox-image {
-      max-width: 100%;
-      max-height: 80vh;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: -50px;
-      right: 0;
-      color: var(--white);
-      font-size: 2.5rem;
-      cursor: pointer;
-      transition: var(--transition);
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .lightbox-close:hover {
-      color: var(--gold);
-      transform: rotate(90deg);
-    }
-
-    .lightbox-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--white);
-      font-size: 2.5rem;
-      cursor: pointer;
-      padding: 1rem;
-      transition: var(--transition);
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .lightbox-nav:hover {
-      background: var(--gold);
-      color: var(--primary-navy);
-    }
-
-    .lightbox-prev { left: -80px; }
-    .lightbox-next { right: -80px; }
-
-    .lightbox-caption {
-      color: var(--white);
-      text-align: center;
-      margin-top: 1rem;
-      font-size: 1.2rem;
-    }
-
-    .lightbox-caption h3 {
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-    }
-
-    /* FEATURES */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-    }
-
-    .feature-item {
-      text-align: center;
-      padding: 2rem 1.5rem;
-      background: var(--white);
-      border: 1px solid #f0f0f0;
-      transition: var(--transition);
-    }
-
-    .feature-item:hover {
-      border-color: var(--gold);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-    }
-
-    .feature-icon {
-      width: 65px;
-      height: 65px;
-      margin: 0 auto 1.2rem;
-      background: var(--champagne);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      color: var(--gold);
-      transition: var(--transition);
-    }
-
-    .feature-item:hover .feature-icon {
-      background: var(--gold);
-      color: var(--white);
-    }
-
-    .feature-title {
-      font-size: 1.25rem;
-      color: var(--primary-navy);
-      margin-bottom: 0.6rem;
-      font-weight: 600;
-    }
-
-    .feature-text {
-      color: var(--text-gray);
-      line-height: 1.6;
-      font-weight: 300;
-      font-size: 0.9rem;
-    }
-
-    /* STATS */
-    .stats-section {
-      background: var(--primary-navy);
-      color: var(--white);
-      padding: 4rem 0;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 2rem;
-      text-align: center;
-    }
-
-    .stat-item h3 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      color: var(--gold);
-      margin-bottom: 0.4rem;
-      font-weight: 300;
-    }
-
-    .stat-item p {
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
-
-    /* TESTIMONIALS */
-    .testimonials {
-      background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
-      color: var(--white);
-      padding: 5rem 0;
-    }
-
-    .testimonials .section-title { color: var(--white); }
-
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 2.5rem;
-    }
-
-    .testimonial-card {
-      background: rgba(255,255,255,0.05);
-      padding: 2rem;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .testimonial-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 1.2rem;
-      font-style: italic;
-      font-weight: 300;
-    }
-
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .author-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--gold);
-    }
-
-    .author-info h4 {
-      font-size: 1rem;
-      margin-bottom: 0.2rem;
-      color: var(--gold);
-    }
-
-    .author-info p {
-      font-size: 0.75rem;
-      opacity: 0.7;
-    }
-
-    .stars {
-      color: var(--gold);
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-    }
-
-    /* CONTACT */
-    .contact-section { background: var(--champagne); }
-
-    .contact-wrapper {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .contact-info h3 {
-      font-size: clamp(1.5rem, 2.5vw, 2rem);
-      color: var(--primary-navy);
-      margin-bottom: 1rem;
-      font-weight: 400;
-    }
-
-    .contact-info > p {
-      color: var(--text-gray);
-      margin-bottom: 2rem;
-      line-height: 1.6;
-      font-weight: 300;
-      font-size: 0.95rem;
-    }
-
-    .contact-details {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    .contact-item i {
-      font-size: 1.2rem;
-      color: var(--gold);
-      margin-top: 0.2rem;
-    }
-
-    .contact-item h4 {
-      font-size: 0.95rem;
-      color: var(--primary-navy);
-      margin-bottom: 0.2rem;
-      font-weight: 600;
-    }
-
-    .contact-item p {
-      color: var(--text-gray);
-      font-weight: 300;
-      white-space: pre-line;
-      font-size: 0.9rem;
-    }
-
-    .contact-form {
-      background: var(--white);
-      padding: 2.5rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-    }
-
-    .form-group { margin-bottom: 1.5rem; }
-
-    .form-group label {
-      display: block;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-gray);
-      margin-bottom: 0.6rem;
-      font-weight: 600;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.8rem 0;
-      border: none;
-      border-bottom: 2px solid #e0e0e0;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.95rem;
-      transition: var(--transition);
-      background: transparent;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-bottom-color: var(--gold);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    /* FOOTER */
-    .footer {
-      background: var(--primary-navy);
-      color: var(--white);
-      padding: 3.5rem 0 1.5rem;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .footer-brand .logo {
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-    }
-
-    .footer-brand p {
-      opacity: 0.7;
-      line-height: 1.6;
-      font-weight: 300;
-      margin-bottom: 1.2rem;
-      font-size: 0.85rem;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 0.7rem;
-    }
-
-    .social-links a {
-      width: 38px;
-      height: 38px;
-      border: 1px solid rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      transition: var(--transition);
-      text-decoration: none;
-    }
-
-    .social-links a:hover {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: var(--primary-navy);
-    }
-
-    .footer-column h4 {
-      font-size: 0.95rem;
-      margin-bottom: 1.2rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    .footer-column ul { list-style: none; }
-    .footer-column li { margin-bottom: 0.7rem; }
-
-    .footer-column a {
-      color: rgba(255,255,255,0.7);
-      text-decoration: none;
-      transition: var(--transition);
-      font-weight: 300;
-      font-size: 0.85rem;
-    }
-
-    .footer-column a:hover {
-      color: var(--gold);
-      padding-left: 5px;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 1.2rem;
-      text-align: center;
-      opacity: 0.6;
-      font-size: 0.8rem;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      background: white;
-      padding: 1rem 1.2rem;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-      z-index: 9999;
-      border-left: 4px solid var(--gold);
-      max-width: 350px;
-      transform: translateX(400px);
-      transition: transform 0.4s ease;
-    }
-
-    .toast.show { transform: translateX(0); }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 1024px) {
-      .nav-links,
-      .language-switcher { display: none !important; }
-      .mobile-toggle { display: flex !important; }
-      
-      .lightbox-prev { left: 10px; }
-      .lightbox-next { right: 10px; }
-      
-      .location-slide {
-        height: 500px;
-      }
-      
-      .location-slide h3 {
-        font-size: 2rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav-container, .container { padding: 0 1rem; }
-      .section { padding: 3.5rem 0; }
-      .section-header { margin-bottom: 2.5rem; }
-      
-      .logo { font-size: 1.1rem; }
-      
-      .hero {
-        min-height: auto;
-        padding: 110px 1rem 50px;
-      }
-      
-      .hero-video-badge {
-        bottom: 1rem;
-        right: 1rem;
-        font-size: 0.65rem;
-      }
-      
-      .hero-cta {
-        flex-direction: column;
-        width: 100%;
-        gap: 0.7rem;
-      }
-      
-      .btn-premium {
-        width: 100%;
-        padding: 0.9rem 1.5rem;
-      }
-      
-      .yachts-grid,
-      .features-grid,
-      .testimonial-grid,
-      .contact-wrapper {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      
-      .yacht-image-wrapper { height: 240px; }
-      .yacht-content { padding: 1.2rem; }
-      .yacht-name { font-size: 1.3rem; }
-      
-      .yacht-footer {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.8rem;
-      }
-      
-      .yacht-price {
-        font-size: 1.4rem;
-        text-align: center;
-      }
-      
-      .btn-yacht {
-        width: 100%;
-        text-align: center;
-      }
-      
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-      }
-      
-      .contact-form { padding: 1.5rem; }
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      
-      .toast {
-        left: 1rem;
-        right: 1rem;
-        max-width: none;
-      }
-      
-      .mobile-menu {
-        width: 100%;
-        max-width: none;
-      }
-      
-      .lightbox-nav {
-        font-size: 2rem;
-        width: 50px;
-        height: 50px;
-      }
-      
-      .lightbox-prev { left: 10px; }
-      .lightbox-next { right: 10px; }
-      
-      .locations-title {
-        font-size: 2rem;
-      }
-      
-      .location-slide {
-        height: 500px;
-      }
-      
-      .location-slide h3 {
-        font-size: 1.8rem;
-      }
-      
-      .location-slide p {
-        font-size: 1rem;
-      }
-      
-      .slider-nav {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-      }
-      
-      .slider-prev { left: 10px; }
-      .slider-next { right: 10px; }
-    }
-
-    @media (max-width: 480px) {
-      .logo { font-size: 1rem; letter-spacing: 1px; }
-      .hero-title { font-size: 1.6rem; }
-      .hero-subtitle { font-size: 0.7rem; }
-      .section-title { font-size: 1.5rem; }
-      .yacht-image-wrapper { height: 200px; }
-      .yacht-name { font-size: 1.2rem; }
-      .yacht-specs { gap: 0.8rem; }
-      .spec { font-size: 0.75rem; }
-      
-      .location-slide {
-        height: 450px;
-      }
-      
-      .location-overlay {
-        padding: 2rem 1.5rem;
-      }
-      
-      .location-slide h3 {
-        font-size: 1.5rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Makara Deluxe | Luxury Charter Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-      <div class="mobile-menu-title" data-i18n="mobile.menuTitle">Menú</div>
-      <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close menu">
-        <i class="fas fa-times"></i>
-      </button>
+<!-- Overlay + menú móvil -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <div class="mobile-menu-title" data-i18n="mobile.title">Menú</div>
+    <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Cerrar menú"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="mobile-menu-content">
+    <ul class="mobile-nav-links">
+      <li><a href="#home" data-i18n="nav.home">Inicio</a></li>
+      <li><a href="#flota" data-i18n="nav.fleet">Flota</a></li>
+      <li><a href="#sedes" data-i18n="nav.locations">Sedes</a></li>
+      <li><a href="#confianza" data-i18n="nav.safety">Seguridad</a></li>
+      <li><a href="#testimonios" data-i18n="nav.clients">Clientes</a></li>
+      <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+      <li><a href="#flota" class="mobile-cta" data-i18n="nav.book">Reservar</a></li>
+    </ul>
+    <div class="mobile-language">
+      <div class="mobile-language-title" data-i18n="language.title">Idioma</div>
+      <div class="mobile-language-options">
+        <div class="mobile-lang-option active" data-lang="es"><span class="lang-flag">🇵🇪</span><span>Español</span></div>
+        <div class="mobile-lang-option" data-lang="en"><span class="lang-flag">🇺🇸</span><span>English</span></div>
+      </div>
     </div>
-    <div class="mobile-menu-content">
-      <ul class="mobile-nav-links">
+  </div>
+</div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo"><span class="logo-mark"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
+        <circle cx="50" cy="50" r="47" fill="#050c14" stroke="#ffffff" stroke-width="4"/>
+        <path d="M32 54 L52 20 L55 54 Z" fill="#ffffff"/>
+        <path d="M16 58 Q50 74 88 48 L79 60 Q50 78 20 67 Z" fill="#ffffff"/>
+      </svg></span> MAKARA <span>DELUXE</span></div>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    <div class="nav-wrapper">
+      <ul class="nav-links">
         <li><a href="#home" data-i18n="nav.home">Inicio</a></li>
-        <li><a href="#fleet" data-i18n="nav.fleet">Flota</a></li>
-        <li><a href="#locations" data-i18n="nav.locations">Sucursales</a></li>
-        <li><a href="#about" data-i18n="nav.about">Nosotros</a></li>
-        <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
-        <li><a href="#contact" class="mobile-cta" data-i18n="nav.bookNow">Reservar</a></li>
+        <li><a href="#flota" data-i18n="nav.fleet">Flota</a></li>
+        <li><a href="#sedes" data-i18n="nav.locations">Sedes</a></li>
+        <li><a href="#confianza" data-i18n="nav.safety">Seguridad</a></li>
+        <li><a href="#testimonios" data-i18n="nav.clients">Clientes</a></li>
+        <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+        <li><a href="#flota" class="nav-cta" data-i18n="nav.book">Reservar</a></li>
       </ul>
-      
-      <div class="mobile-language">
-        <div class="mobile-language-title" data-i18n="language.title">Selección de idioma</div>
-        <div class="mobile-language-options">
-          <div class="mobile-lang-option active" data-lang="es">
-            <span class="lang-flag">🇪🇸</span>
-            <span>Español</span>
-          </div>
-          <div class="mobile-lang-option" data-lang="en">
-            <span class="lang-flag">🇬</span>
-            <span>English</span>
-          </div>
-          <div class="mobile-lang-option" data-lang="fr">
-            <span class="lang-flag">🇫🇷</span>
-            <span>Français</span>
-          </div>
-          <div class="mobile-lang-option" data-lang="it">
-            <span class="lang-flag">🇮</span>
-            <span>Italiano</span>
-          </div>
+      <div class="language-switcher">
+        <div class="language-current" id="languageCurrent">
+          <span class="lang-flag">🇵🇪</span><span class="lang-code">ES</span><i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="language-dropdown" id="languageDropdown">
+          <div class="language-option active" data-lang="es"><span>🇵🇪</span><span>Español</span></div>
+          <div class="language-option" data-lang="en"><span>🇺🇸</span><span>English</span></div>
         </div>
       </div>
     </div>
   </div>
+</nav>
 
-  <!-- LIGHTBOX GALERÍA -->
-  <div class="lightbox" id="lightbox">
-    <div class="lightbox-content">
-      <button class="lightbox-close" id="lightboxClose">
-        <i class="fas fa-times"></i>
-      </button>
-      <button class="lightbox-nav lightbox-prev" id="lightboxPrev">
-        <i class="fas fa-chevron-left"></i>
-      </button>
-      <img src="" alt="" class="lightbox-image" id="lightboxImage">
-      <button class="lightbox-nav lightbox-next" id="lightboxNext">
-        <i class="fas fa-chevron-right"></i>
-      </button>
-      <div class="lightbox-caption" id="lightboxCaption">
-        <h3></h3>
-        <p></p>
-      </div>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-video-container">
+    <div class="hero-video-fallback"></div>
+    <video class="hero-video" autoplay muted loop playsinline
+      poster="https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=1920"
+      id="heroVideo">
+      <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4" type="video/mp4">
+      <source src="https://videos.pexels.com/video-files/2169880/2169880-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <span class="hero-subtitle" data-i18n="hero.subtitle">Bienvenido al Charter de Lujo</span>
+    <h1 class="hero-title" data-i18n="hero.title">Descubre Momentos <em>Extraordinarios</em> en el Mar</h1>
+    <p class="hero-text" data-i18n="hero.text">Experimenta un lujo sin igual a bordo de nuestra flota exclusiva — con disponibilidad real, verificada al instante.</p>
+    <div class="hero-cta">
+      <a href="#flota" class="btn-premium btn-gold" data-i18n="hero.exploreFleet">Explorar Flota</a>
+      <a href="#contacto" class="btn-premium btn-outline" data-i18n="hero.contactUs">Contáctanos</a>
     </div>
   </div>
 
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="logo">
-        MAKARA <span>DELUXE</span>
-      </div>
-      
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+  <div class="hero-video-badge"><i class="fas fa-circle"></i><span>LIVE EXPERIENCE</span></div>
+</section>
 
-      <div class="nav-wrapper">
-        <ul class="nav-links">
-          <li><a href="#home" data-i18n="nav.home">Inicio</a></li>
-          <li><a href="#fleet" data-i18n="nav.fleet">Flota</a></li>
-          <li><a href="#locations" data-i18n="nav.locations">Sucursales</a></li>
-          <li><a href="#about" data-i18n="nav.about">Nosotros</a></li>
-          <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
-          <li><a href="#contact" class="nav-cta" data-i18n="nav.bookNow">Reservar</a></li>
+<!-- Franja de actividad en vivo -->
+<section class="live-strip">
+  <div class="live-strip-inner">
+    <span class="live-strip-label"><i class="fas fa-circle"></i> <span data-i18n="live.label">Actividad en vivo</span></span>
+    <ul class="ais-feed" id="ais-feed"><li class="ais-line muted" data-i18n="live.connecting">Conectando…</li></ul>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item"><h3 class="stat-num" data-count="15">0</h3><p data-i18n="stats.yachts">Yates de Lujo</p></div>
+      <div class="stat-item"><h3 class="stat-num" data-count="230">0</h3><p data-i18n="stats.bookings">Salidas Reservadas</p></div>
+      <div class="stat-item"><h3 class="stat-num" data-count="49" data-decimal="10">0</h3><p data-i18n="stats.rating">Calificación Promedio</p></div>
+      <div class="stat-item"><h3 class="stat-num" data-count="3">0</h3><p data-i18n="stats.sedes">Sedes en el Perú</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEDES -->
+<section class="section sedes-section" id="sedes">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="sedes.label">Nuestras Sedes</span>
+      <h2 class="section-title" data-i18n="sedes.title">Cuatro Puntos de Partida</h2>
+      <p class="section-subtitle" data-i18n="sedes.subtitle">Desde Lima hasta el norte del país</p>
+    </div>
+    <div class="sedes-grid" id="sedes-grid"></div>
+  </div>
+</section>
+
+<!-- FLOTA -->
+<section class="section yachts-section" id="flota">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="fleet.label">Nuestra Flota</span>
+      <h2 class="section-title" data-i18n="fleet.title">Yates Excepcionales</h2>
+      <p class="section-subtitle" data-i18n="fleet.subtitle">Haz clic en cualquier yate para ver comodidades, seguridad y disponibilidad</p>
+    </div>
+    <div class="sede-filters" id="sede-filters"></div>
+    <div class="yachts-grid" id="yacht-grid"></div>
+  </div>
+</section>
+
+<!-- CONFIANZA -->
+<section class="section" id="confianza">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="features.label">¿Por Qué Elegirnos?</span>
+      <h2 class="section-title" data-i18n="features.title">La Diferencia Makara Deluxe</h2>
+      <p class="section-subtitle" data-i18n="features.subtitle">Cada yate pasa por la misma revisión antes de sumarse a la flota</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-anchor"></i></div>
+        <h3 class="feature-title" data-i18n="features.permits.title">Permisos al Día</h3>
+        <p class="feature-text" data-i18n="features.permits.text">Todos con permiso vigente de la Capitanía de Puerto.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-life-ring"></i></div>
+        <h3 class="feature-title" data-i18n="features.emergency.title">Equipo de Emergencia</h3>
+        <p class="feature-text" data-i18n="features.emergency.text">Chalecos, balsa salvavidas, extintores y botiquín siempre a bordo.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-satellite-dish"></i></div>
+        <h3 class="feature-title" data-i18n="features.route.title">Ruta Monitoreada</h3>
+        <p class="feature-text" data-i18n="features.route.text">GPS, radio y rastreo activo durante todo el paseo.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-file-contract"></i></div>
+        <h3 class="feature-title" data-i18n="features.insurance.title">Seguro Verificado</h3>
+        <p class="feature-text" data-i18n="features.insurance.text">Cobertura confirmada antes de aceptar cualquier reserva.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testimonials" id="testimonios">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label" data-i18n="testimonials.label">Testimonios</span>
+      <h2 class="section-title" data-i18n="testimonials.title">Lo Que Dicen Nuestros Clientes</h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="testimonial-text">"Reservamos para un cumpleaños y todo estuvo listo apenas llegamos. El capitán súper atento."</p>
+        <div class="testimonial-author"><div class="author-avatar">CR</div><div class="author-info"><h4>Claudia R.</h4><p>Lima</p></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="testimonial-text">"Me gustó ver en la web que el yate seguía disponible antes de pagar. Nada de sorpresas."</p>
+        <div class="testimonial-author"><div class="author-avatar">JM</div><div class="author-info"><h4>Jorge M.</h4><p>San Isidro</p></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="testimonial-text">"Fuimos a Paracas con el Coral 48 y fue mucho mejor que un tour genérico. Volveremos."</p>
+        <div class="testimonial-author"><div class="author-avatar">FD</div><div class="author-info"><h4>Familia Delgado</h4><p>Miraflores</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="section contact-section" id="contacto">
+  <div class="container">
+    <div class="contact-wrapper">
+      <div class="contact-info">
+        <span class="section-label" data-i18n="contact.label">Ponte en Contacto</span>
+        <h3 data-i18n="contact.title">Comienza Tu Viaje</h3>
+        <p data-i18n="contact.text">¿Listo para embarcarte en una aventura extraordinaria?</p>
+        <div class="contact-details">
+          <div class="contact-item"><i class="fas fa-map-marker-alt"></i><div><h4 data-i18n="contact.visit.title">Nuestras sedes</h4><p data-i18n="contact.visit.address">Lima · Paracas · Máncora</p></div></div>
+          <div class="contact-item"><i class="fab fa-whatsapp"></i><div><h4 data-i18n="contact.call.title">Llámanos</h4><p><a href="https://wa.link/yvcw9n" target="_blank" rel="noopener">+51 934 091 378</a></p></div></div>
+          <div class="contact-item"><i class="fas fa-envelope"></i><div><h4 data-i18n="contact.email.title">Escríbenos</h4><p>reservas@makaradeluxe.pe</p></div></div>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <div class="form-group"><label data-i18n="form.name">Nombre Completo</label><input type="text" data-i18n-placeholder="form.namePlaceholder" placeholder="Juan Pérez" required></div>
+        <div class="form-group"><label data-i18n="form.email">Correo Electrónico</label><input type="email" data-i18n-placeholder="form.emailPlaceholder" placeholder="juan@ejemplo.com" required></div>
+        <div class="form-group"><label data-i18n="form.message">Tu Mensaje</label><textarea data-i18n-placeholder="form.messagePlaceholder" placeholder="Cuéntanos sobre tu experiencia soñada…" required></textarea></div>
+        <button type="submit" class="btn-premium btn-gold" style="width:100%;" data-i18n="form.send">Enviar Consulta</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><span class="logo-mark"><svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
+        <circle cx="50" cy="50" r="47" fill="#050c14" stroke="#ffffff" stroke-width="4"/>
+        <path d="M32 54 L52 20 L55 54 Z" fill="#ffffff"/>
+        <path d="M16 58 Q50 74 88 48 L79 60 Q50 78 20 67 Z" fill="#ffffff"/>
+      </svg></span> MAKARA <span>DELUXE</span></div>
+        <p data-i18n="footer.description">Alquiler de yates con sedes en Lima, Paracas y Máncora.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.link/yvcw9n" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4 data-i18n="footer.explore">Explora</h4>
+        <ul>
+          <li><a href="#flota" data-i18n="nav.fleet">Nuestros yates</a></li>
+          <li><a href="#sedes" data-i18n="nav.locations">Sedes</a></li>
+          <li><a href="#confianza" data-i18n="nav.safety">Seguridad</a></li>
+          <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
         </ul>
-
-        <div class="language-switcher">
-          <div class="language-current" id="languageCurrent">
-            <span></span>
-            <span data-i18n="language.select">Selección de idioma</span>
-            <i class="fas fa-chevron-down"></i>
-          </div>
-          <div class="language-dropdown" id="languageDropdown">
-            <div class="language-option active" data-lang="es">
-              <span>🇪</span>
-              <span>Español</span>
-            </div>
-            <div class="language-option" data-lang="en">
-              <span>🇬🇧</span>
-              <span>English</span>
-            </div>
-            <div class="language-option" data-lang="fr">
-              <span>🇷</span>
-              <span>Français</span>
-            </div>
-            <div class="language-option" data-lang="it">
-              <span>🇮🇹</span>
-              <span>Italiano</span>
-            </div>
-          </div>
-        </div>
+      </div>
+      <div class="footer-column">
+        <h4 data-i18n="footer.services">Servicios</h4>
+        <ul><li><a href="#" data-i18n="footer.byHour">Alquiler por horas</a></li><li><a href="#" data-i18n="footer.events">Eventos privados</a></li></ul>
+      </div>
+      <div class="footer-column">
+        <h4 data-i18n="footer.legal">Legal</h4>
+        <ul><li><a href="#" data-i18n="footer.privacy">Política de privacidad</a></li><li><a href="#" data-i18n="footer.terms">Términos de servicio</a></li></ul>
       </div>
     </div>
-  </nav>
+    <div class="footer-bottom"><p data-i18n="footer.copyright">© 2026 Makara Deluxe. Todos los derechos reservados</p></div>
+  </div>
+</footer>
 
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero-video-container">
-      <div class="hero-video-fallback"></div>
-      <video 
-        class="hero-video" 
-        autoplay 
-        muted 
-        loop 
-        playsinline
-        poster="https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=1920"
-        id="heroVideo"
-      >
-        <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4" type="video/mp4">
-        <source src="https://videos.pexels.com/video-files/2169880/2169880-hd_1920_1080_30fps.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="hero-overlay"></div>
-    
-    <div class="hero-content">
-      <span class="hero-subtitle" data-i18n="hero.subtitle">Bienvenido al Charter de Lujo</span>
-      <h1 class="hero-title" data-i18n="hero.title">Descubre Momentos <em>Extraordinarios</em> en el Mar</h1>
-      <p class="hero-text" data-i18n="hero.text">Experimenta un lujo sin igual a bordo de nuestra flota exclusiva de superyates.</p>
-      <div class="hero-cta">
-        <a href="#fleet" class="btn-premium btn-gold" data-i18n="hero.exploreFleet">Explorar Flota</a>
-        <a href="#contact" class="btn-premium btn-outline" data-i18n="hero.contactUs">Contáctanos</a>
-      </div>
-    </div>
+<div class="whatsapp-widget">
+  <div class="whatsapp-tooltip">
+    <div class="wa-tooltip-header"><span class="wa-online-dot"></span> En línea 24/7</div>
+    <div class="wa-tooltip-msg">¿Qué tipo de experiencias buscas? ☀️</div>
+  </div>
+  <a href="https://wa.link/yvcw9n" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Escríbenos por WhatsApp">
+    <svg viewBox="0 0 100 100" width="26" height="26" aria-hidden="true">
+      <path d="M12 62 L50 24 L54 62 Z" fill="#ffffff"/>
+      <path d="M6 66 Q50 84 94 58 L84 70 Q50 88 12 74 Z" fill="#ffffff"/>
+    </svg>
+  </a>
+</div>
+<a href="#flota" class="floating-cta"><i class="fas fa-anchor"></i> <span data-i18n="nav.book">Reservar ahora</span></a>
 
-    <div class="hero-video-badge">
-      <i class="fas fa-circle"></i>
-      <span>LIVE EXPERIENCE</span>
-    </div>
-  </section>
+<!-- Modal de detalle -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modal-close" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+    <div id="modal-content"></div>
+  </div>
+</div>
 
-  <!-- LOCATIONS SLIDER -->
-  <section class="locations-section" id="locations">
-    <h2 class="locations-title" data-i18n="locations.title">ESTAMOS EN:</h2>
-    
-    <div class="locations-slider">
-      <div class="locations-slides" id="locationsSlides">
-        <!-- Pucusana -->
-        <div class="location-slide">
-          <img src="https://images.pexels.com/photos/189349/pexels-photo-189349.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Pucusana">
-          <div class="location-overlay">
-            <h3>Pucusana</h3>
-            <p data-i18n="locations.pucusana.desc">Un spot lleno de surf, playa y mucha diversión. Disfruta de nuestras embarcaciones de lujo en este hermoso balneario.</p>
-            <a href="#contact" class="location-btn" data-i18n="locations.reserve">Reservar</a>
-          </div>
-        </div>
-        
-        <!-- La Perla -->
-        <div class="location-slide">
-          <img src="https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="La Perla">
-          <div class="location-overlay">
-            <h3>La Perla</h3>
-            <p data-i18n="locations.perla.desc">Exclusividad y elegancia en el corazón del Callao. Vive la experiencia del lujo en el mar.</p>
-            <a href="#contact" class="location-btn" data-i18n="locations.reserve">Reservar</a>
-          </div>
-        </div>
-        
-        <!-- Callao -->
-        <div class="location-slide">
-          <img src="https://images.pexels.com/photos/2161838/pexels-photo-2161838.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Callao">
-          <div class="location-overlay">
-            <h3>Callao</h3>
-            <p data-i18n="locations.callao.desc">El puerto principal con las mejores vistas. Navega por aguas cristalinas con nuestro servicio premium.</p>
-            <a href="#contact" class="location-btn" data-i18n="locations.reserve">Reservar</a>
-          </div>
-        </div>
-        
-        <!-- Ñapo -->
-        <div class="location-slide">
-          <img src="https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Ñapo">
-          <div class="location-overlay">
-            <h3>Ñapo</h3>
-            <p data-i18n="locations.napo.desc">Aventura y relax en un solo lugar. Descubre la magia del mar desde nuestra sucursal en Ñapo.</p>
-            <a href="#contact" class="location-btn" data-i18n="locations.reserve">Reservar</a>
-          </div>
-        </div>
-      </div>
-      
-      <button class="slider-nav slider-prev" id="sliderPrev">
-        <i class="fas fa-chevron-left"></i>
-      </button>
-      <button class="slider-nav slider-next" id="sliderNext">
-        <i class="fas fa-chevron-right"></i>
-      </button>
-      
-      <div class="slider-dots" id="sliderDots"></div>
-    </div>
-  </section>
-
-  <section class="section yachts-section" id="fleet">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label" data-i18n="fleet.label">Nuestra Flota</span>
-        <h2 class="section-title" data-i18n="fleet.title">Yates Excepcionales</h2>
-        <p class="section-subtitle" data-i18n="fleet.subtitle">Haz clic en cualquier yate para ver la galería de fotos</p>
-      </div>
-      <div class="yachts-grid" id="yachtsGrid"></div>
-    </div>
-  </section>
-
-  <section class="stats-section">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item"><h3>15+</h3><p data-i18n="stats.yachts">Yates de Lujo</p></div>
-        <div class="stat-item"><h3>2,500+</h3><p data-i18n="stats.clients">Clientes Felices</p></div>
-        <div class="stat-item"><h3>12</h3><p data-i18n="stats.experience">Años de Experiencia</p></div>
-        <div class="stat-item"><h3>100%</h3><p data-i18n="stats.satisfaction">Satisfacción</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="about">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label" data-i18n="features.label">¿Por Qué Elegirnos?</span>
-        <h2 class="section-title" data-i18n="features.title">La Diferencia Makara Deluxe</h2>
-        <p class="section-subtitle" data-i18n="features.subtitle">Creamos experiencias marítimas extraordinarias</p>
-      </div>
-      <div class="features-grid">
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fas fa-gem"></i></div>
-          <h3 class="feature-title" data-i18n="features.curated.title">Flota Seleccionada</h3>
-          <p class="feature-text" data-i18n="features.curated.text">Cada yate es seleccionado por su calidad excepcional</p>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fas fa-user-tie"></i></div>
-          <h3 class="feature-title" data-i18n="features.expert.title">Tripulación Experta</h3>
-          <p class="feature-text" data-i18n="features.expert.text">Capitanes certificados brindan servicio de excelencia</p>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon"><i class="fas fa-concierge-bell"></i></div>
-          <h3 class="feature-title" data-i18n="features.bespoke.title">Servicio Personalizado</h3>
-          <p class="feature-text" data-i18n="features.bespoke.text">Adaptamos cada detalle a sus preferencias</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="testimonials">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label" data-i18n="testimonials.label">Testimonios</span>
-        <h2 class="section-title" data-i18n="testimonials.title">Lo Que Dicen Nuestros Clientes</h2>
-      </div>
-      <div class="testimonial-grid" id="testimonialsGrid"></div>
-    </div>
-  </section>
-
-  <section class="section contact-section" id="contact">
-    <div class="container">
-      <div class="contact-wrapper">
-        <div class="contact-info">
-          <span class="section-label" data-i18n="contact.label">Ponte en Contacto</span>
-          <h3 data-i18n="contact.title">Comienza Tu Viaje</h3>
-          <p data-i18n="contact.text">¿Listo para embarcarte en una aventura extraordinaria?</p>
-          <div class="contact-details">
-            <div class="contact-item">
-              <i class="fas fa-map-marker-alt"></i>
-              <div>
-                <h4 data-i18n="contact.visit.title">Visita Nuestra Oficina</h4>
-                <p data-i18n="contact.visit.address">1200 Ocean Drive, Suite 500<br>Miami Beach, FL 33139</p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <i class="fas fa-phone-alt"></i>
-              <div>
-                <h4 data-i18n="contact.call.title">Llámanos</h4>
-                <p data-i18n="contact.call.number">+1 (305) 555-YACHT<br>Lun-Vie 9am-7pm EST</p>
-              </div>
-            </div>
-            <div class="contact-item">
-              <i class="fas fa-envelope"></i>
-              <div>
-                <h4 data-i18n="contact.email.title">Escríbenos</h4>
-                <p data-i18n="contact.email.address">charter@makaradeluxe.com</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <form class="contact-form" id="contactForm">
-          <div class="form-group">
-            <label data-i18n="form.name">Nombre Completo</label>
-            <input type="text" data-i18n-placeholder="form.namePlaceholder" placeholder="Juan Pérez" required>
-          </div>
-          <div class="form-group">
-            <label data-i18n="form.email">Correo Electrónico</label>
-            <input type="email" data-i18n-placeholder="form.emailPlaceholder" placeholder="juan@ejemplo.com" required>
-          </div>
-          <div class="form-group">
-            <label data-i18n="form.message">Tu Mensaje</label>
-            <textarea data-i18n-placeholder="form.messagePlaceholder" placeholder="Cuéntanos sobre tu experiencia soñada..." required></textarea>
-          </div>
-          <button type="submit" class="btn-premium btn-gold" style="width: 100%;" data-i18n="form.send">Enviar Consulta</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="logo">MAKARA <span>DELUXE</span></div>
-          <p data-i18n="footer.description">Creando experiencias marítimas extraordinarias desde 2012</p>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-        </div>
-        <div class="footer-column">
-          <h4 data-i18n="footer.quickLinks">Enlaces Rápidos</h4>
-          <ul>
-            <li><a href="#home" data-i18n="nav.home">Inicio</a></li>
-            <li><a href="#fleet" data-i18n="nav.fleet">Flota</a></li>
-            <li><a href="#locations" data-i18n="nav.locations">Sucursales</a></li>
-            <li><a href="#about" data-i18n="nav.about">Nosotros</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h4 data-i18n="footer.services">Servicios</h4>
-          <ul>
-            <li><a href="#" data-i18n="footer.yachtCharter">Alquiler de Yates</a></li>
-            <li><a href="#" data-i18n="footer.crewedCharters">Charters con Tripulación</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h4 data-i18n="footer.legal">Legal</h4>
-          <ul>
-            <li><a href="#" data-i18n="footer.privacy">Política de Privacidad</a></li>
-            <li><a href="#" data-i18n="footer.terms">Términos de Servicio</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p data-i18n="footer.copyright">© 2026 Makara Deluxe. Todos los derechos reservados</p>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Slider de ubicaciones
-    const slides = document.getElementById('locationsSlides');
-    const dotsContainer = document.getElementById('sliderDots');
-    const prevBtn = document.getElementById('sliderPrev');
-    const nextBtn = document.getElementById('sliderNext');
-    const locationSlides = document.querySelectorAll('.location-slide');
-    
-    let currentSlide = 0;
-    const totalSlides = locationSlides.length;
-    
-    locationSlides.forEach((_, index) => {
-      const dot = document.createElement('div');
-      dot.classList.add('slider-dot');
-      if (index === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => goToSlide(index));
-      dotsContainer.appendChild(dot);
-    });
-    
-    const dots = document.querySelectorAll('.slider-dot');
-    
-    function updateSlider() {
-      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
-      dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
-      });
-    }
-    
-    function goToSlide(index) {
-      currentSlide = index;
-      updateSlider();
-    }
-    
-    function nextSlide() {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      updateSlider();
-    }
-    
-    function prevSlide() {
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      updateSlider();
-    }
-    
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
-    
-    setInterval(nextSlide, 5000);
-    
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    slides.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    });
-    
-    slides.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      if (touchEndX < touchStartX - 50) nextSlide();
-      if (touchEndX > touchStartX + 50) prevSlide();
-    });
-
-    // TRADUCCIONES COMPLETAS
-    const translations = {
-      es: {
-        mobile: { menuTitle: 'Menú' },
-        language: { title: 'Selección de idioma', select: 'Selección de idioma' },
-        nav: { home: 'Inicio', fleet: 'Flota', locations: 'Sucursales', about: 'Nosotros', contact: 'Contacto', bookNow: 'Reservar' },
-        hero: { subtitle: 'Bienvenido al Charter de Lujo', title: 'Descubre Momentos <em>Extraordinarios</em> en el Mar', text: 'Experimenta un lujo sin igual a bordo de nuestra flota exclusiva de superyates.', exploreFleet: 'Explorar Flota', contactUs: 'Contáctanos' },
-        locations: { 
-          title: 'ESTAMOS EN:', 
-          reserve: 'Reservar',
-          pucusana: { desc: 'Un spot lleno de surf, playa y mucha diversión. Disfruta de nuestras embarcaciones de lujo en este hermoso balneario.' },
-          perla: { desc: 'Exclusividad y elegancia en el corazón del Callao. Vive la experiencia del lujo en el mar.' },
-          callao: { desc: 'El puerto principal con las mejores vistas. Navega por aguas cristalinas con nuestro servicio premium.' },
-          napo: { desc: 'Aventura y relax en un solo lugar. Descubre la magia del mar desde nuestra sucursal en Ñapo.' }
-        },
-        fleet: { label: 'Nuestra Flota', title: 'Yates Excepcionales', subtitle: 'Haz clic en cualquier yate para ver la galería de fotos', viewGallery: 'Ver Galería', guests: 'Invitados', cabins: 'Cabinas', perDay: 'por día', inquire: 'Consultar', featured: 'Destacado', vip: 'VIP', sport: 'Deportivo' },
-        stats: { yachts: 'Yates de Lujo', clients: 'Clientes Felices', experience: 'Años de Experiencia', satisfaction: 'Satisfacción' },
-        features: { label: '¿Por Qué Elegirnos?', title: 'La Diferencia Makara Deluxe', subtitle: 'Creamos experiencias marítimas extraordinarias', curated: { title: 'Flota Seleccionada', text: 'Cada yate es seleccionado por su calidad excepcional' }, expert: { title: 'Tripulación Experta', text: 'Capitanes certificados brindan servicio de excelencia' }, bespoke: { title: 'Servicio Personalizado', text: 'Adaptamos cada detalle a sus preferencias' } },
-        testimonials: { label: 'Testimonios', title: 'Lo Que Dicen Nuestros Clientes' },
-        contact: { label: 'Ponte en Contacto', title: 'Comienza Tu Viaje', text: '¿Listo para embarcarte en una aventura extraordinaria?', visit: { title: 'Visita Nuestra Oficina', address: '1200 Ocean Drive, Suite 500<br>Miami Beach, FL 33139' }, call: { title: 'Llámanos', number: '+1 (305) 555-YACHT<br>Lun-Vie 9am-7pm EST' }, email: { title: 'Escríbenos', address: 'charter@makaradeluxe.com' } },
-        form: { name: 'Nombre Completo', namePlaceholder: 'Juan Pérez', email: 'Correo Electrónico', emailPlaceholder: 'juan@ejemplo.com', message: 'Tu Mensaje', messagePlaceholder: 'Cuéntanos sobre tu experiencia soñada...', send: 'Enviar Consulta' },
-        footer: { description: 'Creando experiencias marítimas extraordinarias desde 2012', quickLinks: 'Enlaces Rápidos', services: 'Servicios', legal: 'Legal', yachtCharter: 'Alquiler de Yates', crewedCharters: 'Charters con Tripulación', privacy: 'Política de Privacidad', terms: 'Términos de Servicio', copyright: '© 2026 Makara Deluxe. Todos los derechos reservados' }
-      },
-      en: {
-        mobile: { menuTitle: 'Menu' },
-        language: { title: 'Language Selection', select: 'Language Selection' },
-        nav: { home: 'Home', fleet: 'Fleet', locations: 'Locations', about: 'About', contact: 'Contact', bookNow: 'Book Now' },
-        hero: { subtitle: 'Welcome to Luxury Charter', title: 'Discover <em>Extraordinary</em> Moments at Sea', text: 'Experience unparalleled luxury aboard our exclusive fleet of superyachts.', exploreFleet: 'Explore Fleet', contactUs: 'Contact Us' },
-        locations: { 
-          title: 'WE ARE IN:', 
-          reserve: 'Reserve',
-          pucusana: { desc: 'A spot full of surf, beach and lots of fun. Enjoy our luxury boats in this beautiful resort.' },
-          perla: { desc: 'Exclusivity and elegance in the heart of Callao. Live the luxury experience at sea.' },
-          callao: { desc: 'The main port with the best views. Sail through crystal clear waters with our premium service.' },
-          napo: { desc: 'Adventure and relaxation in one place. Discover the magic of the sea from our branch in Ñapo.' }
-        },
-        fleet: { label: 'Our Fleet', title: 'Exceptional Yachts', subtitle: 'Click on any yacht to view the photo gallery', viewGallery: 'View Gallery', guests: 'Guests', cabins: 'Cabins', perDay: 'per day', inquire: 'Inquire', featured: 'Featured', vip: 'VIP', sport: 'Sport' },
-        stats: { yachts: 'Luxury Yachts', clients: 'Happy Clients', experience: 'Years Experience', satisfaction: 'Satisfaction' },
-        features: { label: 'Why Choose Us', title: 'The Makara Deluxe Difference', subtitle: 'We curate extraordinary maritime experiences', curated: { title: 'Curated Fleet', text: 'Every yacht is hand-selected for exceptional quality' }, expert: { title: 'Expert Crew', text: 'Certified captains provide white-glove service' }, bespoke: { title: 'Bespoke Service', text: 'We tailor every detail to your preferences' } },
-        testimonials: { label: 'Testimonials', title: 'What Our Clients Say' },
-        contact: { label: 'Get in Touch', title: 'Begin Your Journey', text: 'Ready to embark on an extraordinary adventure?', visit: { title: 'Visit Our Office', address: '1200 Ocean Drive, Suite 500<br>Miami Beach, FL 33139' }, call: { title: 'Call Us', number: '+1 (305) 555-YACHT<br>Mon-Fri 9am-7pm EST' }, email: { title: 'Email Us', address: 'charter@makaradeluxe.com' } },
-        form: { name: 'Full Name', namePlaceholder: 'John Smith', email: 'Email Address', emailPlaceholder: 'john@example.com', message: 'Your Message', messagePlaceholder: 'Tell us about your dream charter...', send: 'Send Inquiry' },
-        footer: { description: 'Creating extraordinary maritime experiences since 2012', quickLinks: 'Quick Links', services: 'Services', legal: 'Legal', yachtCharter: 'Yacht Charter', crewedCharters: 'Crewed Charters', privacy: 'Privacy Policy', terms: 'Terms of Service', copyright: '© 2026 Makara Deluxe. All rights reserved' }
-      },
-      fr: {
-        mobile: { menuTitle: 'Menu' },
-        language: { title: 'Sélection de langue', select: 'Sélection de langue' },
-        nav: { home: 'Accueil', fleet: 'Flotte', locations: 'Emplacements', about: 'À Propos', contact: 'Contact', bookNow: 'Réserver' },
-        hero: { subtitle: 'Bienvenue au Charter de Luxe', title: 'Découvrez des Moments <em>Extraordinaires</em> en Mer', text: 'Vivez un luxe inégalé à bord de notre flotte exclusive.', exploreFleet: 'Explorer la Flotte', contactUs: 'Nous Contacter' },
-        locations: { 
-          title: 'NOUS SOMMES À:', 
-          reserve: 'Réserver',
-          pucusana: { desc: 'Un spot plein de surf, plage et beaucoup de plaisir. Profitez de nos bateaux de luxe dans cette belle station balnéaire.' },
-          perla: { desc: 'Exclusivité et élégance au cœur de Callao. Vivez l\'expérience du luxe en mer.' },
-          callao: { desc: 'Le port principal avec les meilleures vues. Naviguez dans des eaux cristallines avec notre service premium.' },
-          napo: { desc: 'Aventure et détente en un seul endroit. Découvrez la magie de la mer depuis notre succursale à Ñapo.' }
-        },
-        fleet: { label: 'Notre Flotte', title: 'Yachts Exceptionnels', subtitle: 'Cliquez sur un yacht pour voir la galerie photo', viewGallery: 'Voir Galerie', guests: 'Invités', cabins: 'Cabines', perDay: 'par jour', inquire: 'Demander', featured: 'En Vedette', vip: 'VIP', sport: 'Sport' },
-        stats: { yachts: 'Yachts de Luxe', clients: 'Clients Satisfaits', experience: 'Ans d\'Expérience', satisfaction: 'Satisfaction' },
-        features: { label: 'Pourquoi Nous Choisir', title: 'La Différence Makara Deluxe', subtitle: 'Nous créons des expériences maritimes extraordinaires', curated: { title: 'Flotte Sélectionnée', text: 'Chaque yacht est sélectionné pour sa qualité exceptionnelle' }, expert: { title: 'Équipage Expert', text: 'Nos capitaines certifiés offrent un service excellent' }, bespoke: { title: 'Service Sur Mesure', text: 'Nous adaptons chaque détail à vos préférences' } },
-        testimonials: { label: 'Témoignages', title: 'Ce Que Disent Nos Clients' },
-        contact: { label: 'Prendre Contact', title: 'Commencez Votre Voyage', text: 'Prêt à vous embarquer pour une aventure extraordinaire?', visit: { title: 'Visitez Notre Bureau', address: '1200 Ocean Drive, Suite 500<br>Miami Beach, FL 33139' }, call: { title: 'Appelez-Nous', number: '+1 (305) 555-YACHT<br>Lun-Ven 9h-19h EST' }, email: { title: 'Écrivez-Nous', address: 'charter@makaradeluxe.com' } },
-        form: { name: 'Nom Complet', namePlaceholder: 'Jean Dupont', email: 'Adresse Email', emailPlaceholder: 'jean@exemple.com', message: 'Votre Message', messagePlaceholder: 'Parlez-nous de votre charter rêvé...', send: 'Envoyer la Demande' },
-        footer: { description: 'Création d\'expériences maritimes extraordinaires depuis 2012', quickLinks: 'Liens Rapides', services: 'Services', legal: 'Légal', yachtCharter: 'Location de Yachts', crewedCharters: 'Charters avec Équipage', privacy: 'Politique de Confidentialité', terms: 'Conditions de Service', copyright: '© 2026 Makara Deluxe. Tous droits réservés' }
-      },
-      it: {
-        mobile: { menuTitle: 'Menu' },
-        language: { title: 'Selezione lingua', select: 'Selezione lingua' },
-        nav: { home: 'Home', fleet: 'Flotta', locations: 'Sedi', about: 'Chi Siamo', contact: 'Contatto', bookNow: 'Prenota' },
-        hero: { subtitle: 'Benvenuti al Charter di Lusso', title: 'Scopri Momenti <em>Straordinari</em> in Mare', text: 'Vivi un lusso senza pari a bordo della nostra flotta esclusiva.', exploreFleet: 'Esplora la Flotta', contactUs: 'Contattaci' },
-        locations: { 
-          title: 'SIAMO IN:', 
-          reserve: 'Prenota',
-          pucusana: { desc: 'Un posto pieno di surf, spiaggia e tanto divertimento. Goditi le nostre imbarcazioni di lusso in questa splendida località balneare.' },
-          perla: { desc: 'Esclusività ed eleganza nel cuore di Callao. Vivi l\'esperienza del lusso in mare.' },
-          callao: { desc: 'Il porto principale con le viste migliori. Naviga in acque cristalline con il nostro servizio premium.' },
-          napo: { desc: 'Avventura e relax in un unico luogo. Scopri la magia del mare dalla nostra filiale a Ñapo.' }
-        },
-        fleet: { label: 'La Nostra Flotta', title: 'Yacht Eccezionali', subtitle: 'Clicca su uno yacht per vedere la galleria fotografica', viewGallery: 'Vedi Galleria', guests: 'Ospiti', cabins: 'Cabine', perDay: 'al giorno', inquire: 'Richiedi', featured: 'In Evidenza', vip: 'VIP', sport: 'Sport' },
-        stats: { yachts: 'Yacht di Lusso', clients: 'Clienti Soddisfatti', experience: 'Anni di Esperienza', satisfaction: 'Soddisfazione' },
-        features: { label: 'Perché Sceglierci', title: 'La Differenza Makara Deluxe', subtitle: 'Creiamo esperienze marittime straordinarie', curated: { title: 'Flotta Selezionata', text: 'Ogni yacht è selezionato per la sua qualità eccezionale' }, expert: { title: 'Equipaggio Esperto', text: 'I nostri capitani certificati offrono servizio eccellente' }, bespoke: { title: 'Servizio Su Misura', text: 'Adattiamo ogni dettaglio alle vostre preferenze' } },
-        testimonials: { label: 'Testimonianze', title: 'Cosa Dicono i Nostri Clienti' },
-        contact: { label: 'Mettiti in Contatto', title: 'Inizia il Tuo Viaggio', text: 'Pronto a imbarcarti in un\'avventura straordinaria?', visit: { title: 'Visita il Nostro Ufficio', address: '1200 Ocean Drive, Suite 500<br>Miami Beach, FL 33139' }, call: { title: 'Chiamaci', number: '+1 (305) 555-YACHT<br>Lun-Ven 9:00-19:00 EST' }, email: { title: 'Scrivici', address: 'charter@makaradeluxe.com' } },
-        form: { name: 'Nome Completo', namePlaceholder: 'Mario Rossi', email: 'Indirizzo Email', emailPlaceholder: 'mario@esempio.com', message: 'Il Tuo Messaggio', messagePlaceholder: 'Raccontaci del tuo charter dei sogni...', send: 'Invia Richiesta' },
-        footer: { description: 'Creiamo esperienze marittime straordinarie dal 2012', quickLinks: 'Link Rapidi', services: 'Servizi', legal: 'Legale', yachtCharter: 'Noleggio Yacht', crewedCharters: 'Charter con Equipaggio', privacy: 'Informativa sulla Privacy', terms: 'Termini di Servizio', copyright: '© 2026 Makara Deluxe. Tutti i diritti riservati' }
-      }
-    };
-
-    const yachtsData = {
-      es: [
-        { name: 'Azure Dream', model: 'Sunseeker 76', guests: 10, length: '23.2m', cabins: 4, price: 4500, badge: 'featured', images: ['https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'Obra maestra del diseño moderno con suite principal espaciosa y jacuzzi en cubierta.' },
-        { name: 'Ocean Pearl', model: 'Ferretti 620', guests: 8, length: '18.9m', cabins: 3, price: 3200, badge: null, images: ['https://images.pexels.com/photos/189349/pexels-photo-189349.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/2161838/pexels-photo-2161838.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'Elegancia italiana perfecta para escapadas románticas.' },
-        { name: 'Royal Voyager', model: 'Azimut 80', guests: 12, length: '24.4m', cabins: 5, price: 6800, badge: 'vip', images: ['https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'La joya de la corona con spa privado y cocina de chef.' }
-      ],
-      en: [
-        { name: 'Azure Dream', model: 'Sunseeker 76', guests: 10, length: '23.2m', cabins: 4, price: 4500, badge: 'featured', images: ['https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'A masterpiece of modern yacht design with spacious master suite and jacuzzi.' },
-        { name: 'Ocean Pearl', model: 'Ferretti 620', guests: 8, length: '18.9m', cabins: 3, price: 3200, badge: null, images: ['https://images.pexels.com/photos/189349/pexels-photo-189349.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/2161838/pexels-photo-2161838.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'Italian elegance perfect for romantic getaways.' },
-        { name: 'Royal Voyager', model: 'Azimut 80', guests: 12, length: '24.4m', cabins: 5, price: 6800, badge: 'vip', images: ['https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'The crown jewel with private spa and chef\'s galley.' }
-      ],
-      fr: [
-        { name: 'Azure Dream', model: 'Sunseeker 76', guests: 10, length: '23.2m', cabins: 4, price: 4500, badge: 'featured', images: ['https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'Un chef-d\'œuvre du design moderne avec suite spacieuse et jacuzzi.' },
-        { name: 'Ocean Pearl', model: 'Ferretti 620', guests: 8, length: '18.9m', cabins: 3, price: 3200, badge: null, images: ['https://images.pexels.com/photos/189349/pexels-photo-189349.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/2161838/pexels-photo-2161838.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'L\'élégance italienne parfaite pour les escapades romantiques.' },
-        { name: 'Royal Voyager', model: 'Azimut 80', guests: 12, length: '24.4m', cabins: 5, price: 6800, badge: 'vip', images: ['https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'Le joyau de la couronne avec spa privé et cuisine de chef.' }
-      ],
-      it: [
-        { name: 'Azure Dream', model: 'Sunseeker 76', guests: 10, length: '23.2m', cabins: 4, price: 4500, badge: 'featured', images: ['https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'Un capolavoro del design moderno con suite spaziosa e jacuzzi.' },
-        { name: 'Ocean Pearl', model: 'Ferretti 620', guests: 8, length: '18.9m', cabins: 3, price: 3200, badge: null, images: ['https://images.pexels.com/photos/189349/pexels-photo-189349.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/2161838/pexels-photo-2161838.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'Eleganza italiana perfetta per fughe romantiche.' },
-        { name: 'Royal Voyager', model: 'Azimut 80', guests: 12, length: '24.4m', cabins: 5, price: 6800, badge: 'vip', images: ['https://images.pexels.com/photos/1796715/pexels-photo-1796715.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/261169/pexels-photo-261169.jpeg?auto=compress&cs=tinysrgb&w=800','https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=800'], desc: 'Il gioiello della corona con spa privata e cucina da chef.' }
-      ]
-    };
-
-    const testimonialsData = {
-      es: [
-        { text: 'El Royal Voyager superó todas las expectativas. La atención al detalle fue impecable.', name: 'James Wellington', role: 'CEO, Wellington Enterprises', image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=200' },
-        { text: 'Nuestro crucero de aniversario fue pura magia. Simplemente inolvidable.', name: 'Sophia Chen', role: 'Nueva York, NY', image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200' }
-      ],
-      en: [
-        { text: 'The Royal Voyager exceeded every expectation. The crew\'s attention to detail was impeccable.', name: 'James Wellington', role: 'CEO, Wellington Enterprises', image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=200' },
-        { text: 'Our anniversary cruise was pure magic. Simply unforgettable.', name: 'Sophia Chen', role: 'New York, NY', image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200' }
-      ],
-      fr: [
-        { text: 'Le Royal Voyager a dépassé toutes les attentes. L\'attention aux détails était impeccable.', name: 'James Wellington', role: 'PDG, Wellington Enterprises', image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=200' },
-        { text: 'Notre croisière d\'anniversaire était pure magie. Simplement inoubliable.', name: 'Sophia Chen', role: 'New York, NY', image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200' }
-      ],
-      it: [
-        { text: 'Il Royal Voyager ha superato ogni aspettativa. L\'attenzione ai dettagli era impeccabile.', name: 'James Wellington', role: 'CEO, Wellington Enterprises', image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=200' },
-        { text: 'La nostra crociera di anniversario è stata pura magia. Semplicemente indimenticabile.', name: 'Sophia Chen', role: 'New York, NY', image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200' }
-      ]
-    };
-
-    let currentLang = 'es';
-    let currentYachtIndex = 0;
-    let currentImageIndex = 0;
-    let currentYachts = [];
-
-    // FUNCIÓN DE TRADUCCIÓN CORREGIDA
-    function setLanguage(lang) {
-      currentLang = lang;
-      document.documentElement.lang = lang;
-      
-      // Traducir todos los elementos con data-i18n
-      document.querySelectorAll('[data-i18n]').forEach(element => {
-        const keys = element.getAttribute('data-i18n').split('.');
-        let value = translations[lang];
-        
-        for (const key of keys) {
-          if (value && typeof value === 'object' && key in value) {
-            value = value[key];
-          } else {
-            value = null;
-            break;
-          }
-        }
-        
-        if (value !== null && value !== undefined) {
-          element.innerHTML = value;
-        }
-      });
-      
-      // Traducir placeholders
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-        const keys = element.getAttribute('data-i18n-placeholder').split('.');
-        let value = translations[lang];
-        
-        for (const key of keys) {
-          if (value && typeof value === 'object' && key in value) {
-            value = value[key];
-          } else {
-            value = null;
-            break;
-          }
-        }
-        
-        if (value !== null && value !== undefined) {
-          element.placeholder = value;
-        }
-      });
-      
-      // Actualizar selector de idioma desktop
-      const flags = { es: '🇪🇸', en: '🇬🇧', fr: '🇷', it: '🇮' };
-      const names = { es: 'ES', en: 'EN', fr: 'FR', it: 'IT' };
-      
-      const desktopFlag = document.querySelector('#languageCurrent span:first-child');
-      const desktopName = document.querySelector('#languageCurrent span:nth-child(2)');
-      
-      if (desktopFlag) desktopFlag.textContent = flags[lang];
-      if (desktopName) desktopName.textContent = names[lang];
-      
-      // Actualizar opciones activas en dropdown
-      document.querySelectorAll('.language-option').forEach(option => {
-        option.classList.toggle('active', option.dataset.lang === lang);
-      });
-      
-      // Actualizar opciones activas en menú móvil
-      document.querySelectorAll('.mobile-lang-option').forEach(option => {
-        option.classList.toggle('active', option.dataset.lang === lang);
-      });
-
-      // Re-renderizar contenido dinámico
-      renderYachts();
-      renderTestimonials();
-    }
-
-    function renderYachts() {
-      const grid = document.getElementById('yachtsGrid');
-      const yachts = yachtsData[currentLang];
-      const t = translations[currentLang].fleet;
-      currentYachts = yachts;
-      
-      grid.innerHTML = yachts.map((yacht, index) => `
-        <div class="yacht-card" onclick="openLightbox(${index})">
-          <div class="yacht-image-wrapper">
-            <img src="${yacht.images[0]}" alt="${yacht.name}" class="yacht-image" loading="lazy">
-            ${yacht.badge ? `<span class="yacht-badge">${t[yacht.badge]}</span>` : ''}
-            <div class="yacht-view-gallery">
-              <i class="fas fa-images"></i> ${t.viewGallery}
-            </div>
-          </div>
-          <div class="yacht-content">
-            <div class="yacht-category">${yacht.model}</div>
-            <h3 class="yacht-name">${yacht.name}</h3>
-            <div class="yacht-specs">
-              <div class="spec"><i class="fas fa-users"></i><span>${yacht.guests} ${t.guests}</span></div>
-              <div class="spec"><i class="fas fa-ruler-horizontal"></i><span>${yacht.length}</span></div>
-              <div class="spec"><i class="fas fa-bed"></i><span>${yacht.cabins} ${t.cabins}</span></div>
-            </div>
-            <p class="yacht-description">${yacht.desc}</p>
-            <div class="yacht-footer">
-              <div class="yacht-price">$${yacht.price.toLocaleString()}<span>${t.perDay}</span></div>
-              <button class="btn-yacht" onclick="event.stopPropagation(); inquireYacht('${yacht.name}')">${t.inquire}</button>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderTestimonials() {
-      const grid = document.getElementById('testimonialsGrid');
-      const testimonials = testimonialsData[currentLang];
-      
-      grid.innerHTML = testimonials.map(t => `
-        <div class="testimonial-card">
-          <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-          <p class="testimonial-text">"${t.text}"</p>
-          <div class="testimonial-author">
-            <img src="${t.image}" alt="${t.name}" class="author-avatar" loading="lazy">
-            <div class="author-info"><h4>${t.name}</h4><p>${t.role}</p></div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function openLightbox(index) {
-      currentYachtIndex = index;
-      currentImageIndex = 0;
-      const yacht = currentYachts[index];
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImage = document.getElementById('lightboxImage');
-      const lightboxCaption = document.getElementById('lightboxCaption');
-      
-      lightboxImage.src = yacht.images[0];
-      lightboxCaption.querySelector('h3').textContent = yacht.name;
-      lightboxCaption.querySelector('p').textContent = `${yacht.model} - ${yacht.length}`;
-      
-      lightbox.classList.add('active');
-      document.body.classList.add('lightbox-open');
-    }
-
-    function closeLightbox() {
-      const lightbox = document.getElementById('lightbox');
-      lightbox.classList.remove('active');
-      document.body.classList.remove('lightbox-open');
-    }
-
-    function nextImage() {
-      const yacht = currentYachts[currentYachtIndex];
-      currentImageIndex = (currentImageIndex + 1) % yacht.images.length;
-      updateLightboxImage();
-    }
-
-    function prevImage() {
-      const yacht = currentYachts[currentYachtIndex];
-      currentImageIndex = (currentImageIndex - 1 + yacht.images.length) % yacht.images.length;
-      updateLightboxImage();
-    }
-
-    function updateLightboxImage() {
-      const yacht = currentYachts[currentYachtIndex];
-      const lightboxImage = document.getElementById('lightboxImage');
-      const lightboxCaption = document.getElementById('lightboxCaption');
-      
-      lightboxImage.src = yacht.images[currentImageIndex];
-      lightboxCaption.querySelector('h3').textContent = `${yacht.name} - ${currentImageIndex + 1}/${yacht.images.length}`;
-    }
-
-    function inquireYacht(yachtName) {
-      document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
-      setTimeout(() => {
-        const textarea = document.querySelector('.contact-form textarea');
-        const messages = {
-          es: `Estoy interesado en alquilar el ${yachtName}. Por favor, proporcione más información.`,
-          en: `I'm interested in chartering the ${yachtName}. Please provide more information.`,
-          fr: `Je suis intéressé par l'affrètement du ${yachtName}. Veuillez me fournir plus d'informations.`,
-          it: `Sono interessato al noleggio del ${yachtName}. Si prega di fornire maggiori informazioni.`
-        };
-        textarea.value = messages[currentLang];
-      }, 800);
-    }
-
-    // Event listeners del menú móvil
-    const mobileToggle = document.getElementById('mobileToggle');
-    const mobileCloseBtn = document.getElementById('mobileCloseBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-
-    function openMobileMenu() {
-      mobileMenu.classList.add('active');
-      mobileMenuOverlay.classList.add('active');
-      mobileToggle.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeMobileMenu() {
-      mobileMenu.classList.remove('active');
-      mobileMenuOverlay.classList.remove('active');
-      mobileToggle.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    if (mobileToggle) mobileToggle.addEventListener('click', openMobileMenu);
-    if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileMenu);
-    if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-
-    document.querySelectorAll('.mobile-nav-links a').forEach(link => {
-      link.addEventListener('click', closeMobileMenu);
-    });
-
-    // EVENT LISTENER PARA CAMBIO DE IDIOMA EN MENÚ MÓVIL
-    document.querySelectorAll('.mobile-lang-option').forEach(option => {
-      option.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const lang = option.dataset.lang;
-        console.log('Cambiando idioma a:', lang);
-        setLanguage(lang);
-      });
-    });
-
-    // Lightbox
-    const lightboxClose = document.getElementById('lightboxClose');
-    const lightboxPrev = document.getElementById('lightboxPrev');
-    const lightboxNext = document.getElementById('lightboxNext');
-
-    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-    if (lightboxPrev) lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); prevImage(); });
-    if (lightboxNext) lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); nextImage(); });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') prevImage();
-      if (e.key === 'ArrowRight') nextImage();
-    });
-
-    document.getElementById('lightbox').addEventListener('click', (e) => {
-      if (e.target.id === 'lightbox') closeLightbox();
-    });
-
-    // EVENT LISTENER PARA CAMBIO DE IDIOMA EN DROPDOWN DESKTOP
-    const langCurrent = document.getElementById('languageCurrent');
-    const langDropdown = document.getElementById('languageDropdown');
-    
-    if (langCurrent) {
-      langCurrent.addEventListener('click', (e) => {
-        e.stopPropagation();
-        langDropdown.classList.toggle('active');
-      });
-    }
-
-    document.querySelectorAll('.language-option').forEach(option => {
-      option.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const lang = option.dataset.lang;
-        console.log('Cambiando idioma a:', lang);
-        setLanguage(lang);
-        if (langDropdown) langDropdown.classList.remove('active');
-      });
-    });
-
-    document.addEventListener('click', (e) => {
-      if (langDropdown && !e.target.closest('.language-switcher')) {
-        langDropdown.classList.remove('active');
-      }
-    });
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (href === '#' || href.length <= 1) return;
-        e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
-    // Form submission
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const messages = {
-        es: { title: '¡Gracias!', text: 'Su consulta ha sido recibida. Nos contactaremos en 24 horas.' },
-        en: { title: 'Thank You!', text: 'Your inquiry has been received. We will contact you within 24 hours.' },
-        fr: { title: 'Merci!', text: 'Votre demande a été reçue. Nous vous contacterons dans les 24 heures.' },
-        it: { title: 'Grazie!', text: 'La tua richiesta è stata ricevuta. Ti contatteremo entro 24 ore.' }
-      };
-      
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.innerHTML = `
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <i class="fas fa-check-circle" style="font-size:2rem;color:#c9a961;"></i>
-          <div>
-            <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-bottom:0.3rem;">${messages[currentLang].title}</h4>
-            <p style="color:#666;font-size:0.85rem;margin:0;">${messages[currentLang].text}</p>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(toast);
-      
-      setTimeout(() => toast.classList.add('show'), 10);
-      setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 400);
-      }, 4000);
-      
-      this.reset();
-    });
-
-    // Video hero
-    const heroVideo = document.getElementById('heroVideo');
-    
-    function playHeroVideo() {
-      if (heroVideo) {
-        heroVideo.play().catch(() => {});
-      }
-    }
-    
-    window.addEventListener('load', playHeroVideo);
-    
-    const heroSection = document.querySelector('.hero');
-    const videoObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          if (heroVideo) heroVideo.play().catch(() => {});
-        } else {
-          if (heroVideo) heroVideo.pause();
-        }
-      });
-    }, { threshold: 0.3 });
-    
-    if (heroSection) videoObserver.observe(heroSection);
-
-    // INICIALIZAR EN ESPAÑOL
-    setLanguage('es');
-  </script>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/fallback-data.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
