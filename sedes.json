@@ -1,0 +1,29 @@
+[
+  {
+    "id": "lima",
+    "nombre": { "es": "Lima", "en": "Lima" },
+    "region": { "es": "Marina Miraflores", "en": "Marina Miraflores" },
+    "descripcion": {
+      "es": "Nuestra sede principal, en el corazón de Lima. Salidas al atardecer con vista a la Costa Verde.",
+      "en": "Our main location, in the heart of Lima. Sunset departures with views of the Costa Verde."
+    }
+  },
+  {
+    "id": "paracas",
+    "nombre": { "es": "Paracas", "en": "Paracas" },
+    "region": { "es": "Ica", "en": "Ica" },
+    "descripcion": {
+      "es": "Bahía tranquila, punto de partida para recorrer las Islas Ballestas y su fauna marina.",
+      "en": "A calm bay, the starting point for exploring the Ballestas Islands and their marine wildlife."
+    }
+  },
+  {
+    "id": "mancora",
+    "nombre": { "es": "Máncora", "en": "Máncora" },
+    "region": { "es": "Piura", "en": "Piura" },
+    "descripcion": {
+      "es": "Aguas cálidas del norte, perfectas para pesca deportiva y días largos de sol.",
+      "en": "Warm northern waters, perfect for sport fishing and long sunny days."
+    }
+  }
+]
