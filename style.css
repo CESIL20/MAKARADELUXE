@@ -24,9 +24,22 @@ a { color: inherit; }
 /* NAVBAR */
 .navbar { position: sticky; top: 0; width: 100%; z-index: 1000; padding: 1rem 0; background: var(--primary-navy); box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
 .nav-container { max-width: 1300px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-.logo { font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; color: var(--white); display: flex; align-items: center; gap: 10px; letter-spacing: 1.5px; }
-.logo i { color: var(--gold); }
-.logo span { color: var(--gold); }
+.logo{
+    display:flex;
+    align-items:center;
+}
+
+.logo img{
+    height:68px;
+    width:auto;
+    display:block;
+    object-fit:contain;
+    transition:all .3s ease;
+}
+
+.logo img:hover{
+    transform:scale(1.05);
+}
 .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
 .nav-links a { color: var(--white); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: var(--transition); }
 .nav-links a:hover { color: var(--gold); }
